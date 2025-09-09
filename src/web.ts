@@ -7,4 +7,10 @@ export class UnityWeb extends WebPlugin implements UnityPlugin {
     console.log('ECHO', options);
     return options;
   }
+
+  async launch(): Promise<void> {
+    console.log('Unity launch called on web platform');
+    // Unity is not available on web platform
+    throw new Error('Unity is not available on web platform');
+  }
 }

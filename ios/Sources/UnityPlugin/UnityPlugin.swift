@@ -10,7 +10,8 @@ public class UnityPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "UnityPlugin"
     public let jsName = "Unity"
     public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "launch", returnType: CAPPluginReturnPromise)
     ]
     private let implementation = Unity()
 
@@ -19,5 +20,14 @@ public class UnityPlugin: CAPPlugin, CAPBridgedPlugin {
         call.resolve([
             "value": implementation.echo(value)
         ])
+    }
+
+    @objc func launch(_ call: CAPPluginCall) {
+        do {
+            try implementation.launch()
+            call.resolve()
+        } catch {
+            call.reject("Failed to launch Unity", error)
+        }
     }
 }
